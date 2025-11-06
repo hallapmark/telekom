@@ -1,4 +1,5 @@
 import './App.css'
+import { ToastContainer, toast } from 'react-toastify';
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import Ilmumine from './pages/Ilmumine'
 import Kujundus from './pages/Kujundus'
@@ -11,22 +12,39 @@ import { useRef, useState } from 'react'
 
 function App() {
   const [sisselogitud, muudaSisselogitud] = useState("ei");
-  const [sonum, muudaSonum] = useState("");
   const kasutajaNimiRef = useRef();
   const paroolRef = useRef();
 
   function logiSisse() {
-    if (paroolRef.current.value === "123") {
-      muudaSisselogitud("jah");
-      muudaSonum(kasutajaNimiRef.current.value + ", oled sisselogitud");
+    if (paroolRef.current.value.length < 8) {
+      toast.error("Parool on liiga lühike!");
       return;
     }
-    muudaSonum("Vale parool");
+
+    if (paroolRef.current.value === paroolRef.current.value.toLowerCase()) {
+      toast.error("Parool peab sisaldama vähemalt üht suurt tähte!");
+      return;
+    }
+
+    if (paroolRef.current.value === paroolRef.current.value.toUpperCase()) {
+      toast.error("Parool peab sisaldama vähemalt üht väikest tähte!");
+      return;
+    }
+
+    if (!(paroolRef.current.value.includes("%"))) {
+      toast.error("Parool peab sisaldama % tähemärki!");
+    }
+
+    if (paroolRef.current.value === "%23Av4236") {
+      muudaSisselogitud("jah");
+      toast.success(`${kasutajaNimiRef.current.value}, oled sisselogitud!`);
+      return;
+    };
+    toast.error("Vale parool!");
   }
 
   return (
     <div className="App">
-      <div>{sonum}</div>
       {sisselogitud == "ei" && 
         <div>
           <label>Kasutajanimi</label> <br/>
@@ -64,6 +82,11 @@ function App() {
           </div> 
         } />
       </Routes>
+
+      <ToastContainer 
+        theme="colored"
+        autoClose={3000}
+      />
 
     </div>
   )
