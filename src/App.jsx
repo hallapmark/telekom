@@ -9,6 +9,10 @@ import Hind from './pages/Hind'
 import Kontakt from './pages/Kontakt'
 import Meist from './pages/Meist'
 import { useRef, useState } from 'react'
+import Months from './pages/Arrays/Months';
+import Arrays from './pages/Arrays/Arrays';
+import Animals from './pages/Arrays/Animals';
+import Words from './pages/Arrays/Words';
 
 function App() {
   const [sisselogitud, muudaSisselogitud] = useState("ei");
@@ -65,6 +69,7 @@ function App() {
       <Link to="/hind"><button>Hind</button></Link>
       <Link to="/kontakt"><button>Kontakt</button></Link>
       <Link to="/meist"><button>Meist</button></Link>
+      <Link to="/arrays"><button>Arrays</button></Link>
       
       <Routes>
         <Route path="/" element={ <Navigate to="/ilmumine" />} />
@@ -75,6 +80,12 @@ function App() {
         <Route path="/hind" element={ <Hind/> } />
         <Route path="/kontakt" element={ <Kontakt/> } />
         <Route path="/meist" element={ <Meist/> } />
+
+        <Route path="/arrays" element={ <Arrays/> } />
+        <Route path="/months" element={ <Months/>} />
+        <Route path="/animals" element={ <Animals/>} />
+        <Route path="/words" element={ <Words/>} />
+
         <Route path="/*" element={ 
           <div>
             <h2>404</h2>
